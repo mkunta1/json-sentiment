@@ -7864,20 +7864,18 @@ Requirement already satisfied: MarkupSafe&gt;=2.0 in c:\users\mahi2\json-sentime
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [38]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lyricsgenius</span>
-<span class="n">genius</span> <span class="o">=</span> <span class="n">lyricsgenius</span><span class="o">.</span><span class="n">Genius</span><span class="p">(</span><span class="s2">"LSJHBo6rF-Ojfvuej4F7TE5QhnaJBNtK4L-tA5hEOF-TtKojBv0y2tmJPkOmKzGd"</span><span class="p">)</span>
-
-<span class="c1"># Search for a song by artist and song name</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># import dependencies</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lyricsgenius</span>
+<span class="c1"># This script uses the lyricsgenius library to fetch and print the lyrics of a song by They Might Be Giants.</span>
+<span class="c1"># Make sure to install the lyricsgenius library first using pip</span>
+<span class="n">genius</span> <span class="o">=</span> <span class="n">lyricsgenius</span><span class="o">.</span><span class="n">Genius</span><span class="p">(</span><span class="s1">'e-lDH-OS8NPZuQ0nx-Y4EvU31u2VYfcahFIRPOKtW5aVTppkmn321dOljj1l_RTu'</span><span class="p">)</span>
 <span class="n">song</span> <span class="o">=</span> <span class="n">genius</span><span class="o">.</span><span class="n">search_song</span><span class="p">(</span><span class="s2">"Birdhouse in your soul"</span><span class="p">,</span> <span class="s2">"They Might Be Giants"</span><span class="p">)</span>
-
-<span class="c1"># Print the lyrics if the song was found</span>
-<span class="k">if</span> <span class="n">song</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">song</span><span class="o">.</span><span class="n">lyrics</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Song not found."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">song</span><span class="o">.</span><span class="n">lyrics</span><span class="p">)</span>
+<span class="c1"># Save the lyrics to a file</span>
+<span class="n">song</span><span class="o">.</span><span class="n">save_lyrics</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -7976,6 +7974,7 @@ The birdhouse in your soul
 Not to put too fine a point on it
 Say I'm the only bee in your bonnet
 Make a little birdhouse in your soul
+Wrote lyrics_theymightbegiants_birdhouseinyoursoul.json.
 </pre>
 </div>
 </div>
@@ -7999,41 +7998,28 @@ Make a little birdhouse in your soul
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lyricsgenius</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">textblob</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextBlob</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># import dependencies</span>
+<span class="c1"># Make sure to install all required packages before running this script</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spacy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spacytextblob.spacytextblob</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpacyTextBlob</span>
 
-<span class="c1"># Initialize Genius API client</span>
-<span class="n">genius</span> <span class="o">=</span> <span class="n">lyricsgenius</span><span class="o">.</span><span class="n">Genius</span><span class="p">(</span><span class="s2">"LSJHBo6rF-Ojfvuej4F7TE5QhnaJBNtK4L-tA5hEOF-TtKojBv0y2tmJPkOmKzGd"</span><span class="p">)</span>
+<span class="c1"># Open the JSON file and read the lyrics</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"lyrics_theymightbegiants_birdhouseinyoursoul.json"</span><span class="p">,</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">result_file</span><span class="p">:</span>
+    <span class="n">contents</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">result_file</span><span class="p">)</span>
+<span class="n">lyrics</span><span class="o">=</span><span class="n">contents</span><span class="p">[</span><span class="s2">"lyrics"</span><span class="p">]</span>
+<span class="c1"># Print the lyrics from the JSON file</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
 
-<span class="c1"># Search for a song by artist and song name</span>
-<span class="n">song</span> <span class="o">=</span> <span class="n">genius</span><span class="o">.</span><span class="n">search_song</span><span class="p">(</span><span class="s2">"Birdhouse in your soul"</span><span class="p">,</span> <span class="s2">"They Might Be Giants"</span><span class="p">)</span>
-
-<span class="c1"># Print the lyrics if the song was found</span>
-<span class="k">if</span> <span class="n">song</span><span class="p">:</span>
-    <span class="n">lyrics</span> <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">lyrics</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Song lyrics:</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Song not found."</span><span class="p">)</span>
-
-<span class="c1"># Use TextBlob for sentiment analysis</span>
-<span class="n">blob</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
-
-<span class="c1"># Get polarity score (ranges from -1 to 1)</span>
-<span class="n">polarity</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sentiment Analysis (Polarity Score):"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Polarity score: </span><span class="si">{</span><span class="n">polarity</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Determine sentiment based on polarity score</span>
-<span class="k">if</span> <span class="n">polarity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"The song lyrics have a positive connotation."</span><span class="p">)</span>
-<span class="k">elif</span> <span class="n">polarity</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"The song lyrics have a negative connotation."</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"The song lyrics have a neutral connotation."</span><span class="p">)</span>
+<span class="c1"># Load the Spacy model and add the SpacyTextBlob component to perform sentiment analysis</span>
+<span class="n">nlp</span><span class="o">=</span><span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">"en_core_web_sm"</span><span class="p">)</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s2">"spacytextblob"</span><span class="p">)</span>
+<span class="n">analysis</span><span class="o">=</span><span class="n">nlp</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
+<span class="n">polarity_score</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">blob</span><span class="o">.</span><span class="n">polarity</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Polarity is </span><span class="si">{</span><span class="n">polarity_score</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8046,11 +8032,7 @@ Make a little birdhouse in your soul
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Searching for "Birdhouse in your soul" by They Might Be Giants...
-Done.
-Song lyrics:
-
-64 ContributorsBirdhouse in Your Soul LyricsLike Many TMBG songs the direct meaning can be debated. This one seems to be one of the more simple cases however. This is a song about a night-light, from the night-light’s point of view.[Bridge]
+<pre>64 ContributorsBirdhouse in Your Soul LyricsLike Many TMBG songs the direct meaning can be debated. This one seems to be one of the more simple cases however. This is a song about a night-light, from the night-light’s point of view.[Bridge]
 I'm your only friend
 I'm not your only friend
 But I'm a little glowing friend
@@ -8134,10 +8116,7 @@ The birdhouse in your soul
 Not to put too fine a point on it
 Say I'm the only bee in your bonnet
 Make a little birdhouse in your soul
-
-Sentiment Analysis (Polarity Score):
-Polarity score: 0.0475177304964539
-The song lyrics have a positive connotation.
+Polarity is 0.0475177304964539
 </pre>
 </div>
 </div>
@@ -8161,7 +8140,7 @@ The song lyrics have a positive connotation.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lyricsgenius</span>
@@ -8245,7 +8224,7 @@ Song 'Pal Pal Dil Ke Paas' by Kishore Kumar saved to kishore_kumar_pal_pal_dil_k
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">textblob</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextBlob</span>
